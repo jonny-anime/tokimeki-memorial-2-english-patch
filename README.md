@@ -104,8 +104,6 @@ saves from the Japanese game should carry over. A save *state* made with a Japan
 back when loaded: load it, switch to the English disc
 (*System → Change Disc*), and make a new state.
 
-**Controls are Japanese-style:** ○ (Circle) confirms, × (Cross) goes back.
-
 ## What's still in Japanese
 
 **On purpose**
