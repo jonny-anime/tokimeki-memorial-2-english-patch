@@ -16,3 +16,6 @@ __pycache__/
 
 # API keys for tools/mt.py - never commit
 .env
+
+# xdelta patches for releases (tools/make_xdelta.py) - upload them, don't commit them
+patches/

@@ -14,6 +14,7 @@ Research notes and tools for the Tokimeki Memorial 2 translation toolkit.
   - `space_report.py <disc.bin>...` – room each scene has for longer text
   - `translations.py unpack|pack|init` – `translations/` ↔ one workbook per scene (for `mt.py`), and workbooks from the discs
   - `build_patch.py <original.bin> <out.bin> [--tl DIR]` – builds one patched English disc image (default `--tl translations`); `../patch.py <folder>` does every disc
+  - `make_xdelta.py <original discs> <English discs>` – xdelta patches and checksums for a release
   - `mt.py`, `mt_compare.py`, `llm.py`, `limits.py` – machine translation through LLM APIs (see `translating.md`)
   - `pictures.py find|export|import` – pictures with Japanese text; `make_pictures.py --disc1 … --disc2 … [--check]` remakes `pictures/*.png` from your discs with the edits in `tools/art/`
   - `datepatch.py`, `namepatch.py`, `evsname.py`, `evsgrid.py` – the main-screen date box, Latin name entry, romaji EVS nickname and reading grid
