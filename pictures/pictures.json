@@ -1,0 +1,93 @@
+{
+ "pic-6bd6dd34c6": {
+  "png": "name_buttons.png",
+  "width": 64,
+  "bpp": 4,
+  "at": [
+   "s2067:952"
+  ],
+  "what": "Disc 1 name-entry buttons (かな カナ 記号 漢字 戻る 終了), the copy the screen loads; VRAM (960,0), CLUTs on row 480"
+ },
+ "pic-93bf727d73": {
+  "png": "name_buttons_packet.png",
+  "width": 64,
+  "bpp": 4,
+  "at": [
+   "73751:1416"
+  ],
+  "what": "Disc 1, a second copy of the same buttons in a packet (used elsewhere)"
+ },
+ "pic-460d957e5d": {
+  "png": "main_stats.png",
+  "width": 64,
+  "bpp": 4,
+  "at": [
+   "packets"
+  ],
+  "what": "Discs 2-5: the stat labels in an lz1 packet, loaded to VRAM (992,0); not the copy the main screen draws, patched so every copy matches"
+ },
+ "pic-642fc53202": {
+  "png": "main_stats_hands.png",
+  "width": 64,
+  "bpp": 4,
+  "at": [
+   "records"
+  ],
+  "what": "Main screen (Discs 2-5): stat labels 体調 文系 理系 芸術 運動 雑学 容姿 根性 ストレス, weekday and date glyphs, hand cursors, R1; image records in the main-screen modules (Disc 2 r11403:516, r12419:1688), VRAM (192,256)"
+ },
+ "pic-a256f52375": {
+  "png": "file_select_date.png",
+  "width": 64,
+  "bpp": 4,
+  "at": [
+   "packets"
+  ],
+  "what": "File-select background piece with the date box (年 月 日 baked in, now blank / \"/\" / blank) and the ニュー / ロード buttons (NEW / LOAD). Disc 2 packet 968:1440, VRAM (640,0), CLUT (144,480)"
+ },
+ "pic-68590248de": {
+  "png": "file_select_copy.png",
+  "width": 64,
+  "bpp": 4,
+  "at": [
+   "packets"
+  ],
+  "what": "File-select background piece with the コピー / クリア buttons (COPY / ERASE). Disc 2 packet 967:1880, VRAM (576,0)"
+ },
+ "pic-9059d8176b": {
+  "png": "file_select_save.png",
+  "width": 64,
+  "bpp": 4,
+  "at": [
+   "s841:464",
+   "s966:152"
+  ],
+  "what": "File-select parts: slot numbers, YES / NO, SLOT:1/2 and the セーブ button (SAVE). Disc 2 streams s841:464 and s966:152, VRAM (512,0)"
+ },
+ "pic-ca45b87c63": {
+  "png": "file_select_rebuild.png",
+  "width": 64,
+  "bpp": 4,
+  "at": [
+   "packets"
+  ],
+  "what": "File-select button セーブシステムヲ ツクリナオス (REBUILD SYSTEM FILE). Disc 2 packet 969:360, VRAM (672,0)"
+ },
+ "pic-1e3496eace": {
+  "png": "title_menu_left.png",
+  "width": 64,
+  "bpp": 4,
+  "at": [
+   "packets"
+  ],
+  "what": "Title menu, left half: ゲームスタート おまけ オプション (GAME START, EXTRAS, OPTIONS; two shadings), PUSH ANY START BUTTON. Disc 2 packet 728:1988, VRAM (832,0), CLUT (0,482). Made with work/exp21_title.py"
+ },
+ "pic-6ad7e3451f": {
+  "png": "title_menu_right.png",
+  "width": 64,
+  "bpp": 4,
+  "at": [
+   "packets"
+  ],
+  "what": "Title menu, right half: オプション, ポケットステーション (OPTIONS, POCKETSTATION; two shadings), cursor bar. Disc 2 packet 730:1820, VRAM (864,0)"
+ }
+}

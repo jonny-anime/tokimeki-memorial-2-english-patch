@@ -1,0 +1,11 @@
+# Python packages the tools need (Python 3.10 or newer).
+# Install with:  python -m pip install -r requirements.txt   (on Windows: py -m pip install -r requirements.txt)
+
+keystone-engine>=0.9.2   # assembles the game-code patches (build_patch, glyphpatch, namepatch, evsname)
+numpy>=1.24              # scene groups and picture handling
+pillow>=10.0             # reading and writing the translated pictures
+zstandard>=0.21          # reading DuckStation save states (pictures.py find / export)
+
+# Only for the verify_*.py checks of the code patches (an emulated CPU and a disassembler):
+capstone>=5.0
+unicorn>=2.0

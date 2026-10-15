@@ -1,0 +1,18 @@
+/Tokimeki 2/
+# Game images and extracted game data - never commit
+*.bin
+*.cue
+*.iso
+*.img
+*.chd
+# Extracted data and experiments - never commit
+work/
+__pycache__/
+# Ignore environment variables 
+.env
+.env.local
+.env.*.local
+
+
+# API keys for tools/mt.py - never commit
+.env

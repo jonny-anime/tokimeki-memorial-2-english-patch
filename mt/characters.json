@@ -1,0 +1,117 @@
+{
+ "_comment": "Character notes sent with each scene, for the characters in it (by speaker label, or by the N of {char:2N} / {you:1N}). Sources: nijinolove.sakura.ne.jp/hibikino/profile.htm, w.atwiki.jp/tokimeki_dictionary (character pages), hibikino-station.com (Miho/Maho), w.atwiki.jp/storyteller/pages/1301.html, and counts of pronouns and sentence endings in the game script. Edit freely; changes make new requests.",
+ "player": {
+  "name": "the player",
+  "speakers": ["{name1}", "{name2}"],
+  "codes": [],
+  "notes": "An ordinary high-school boy who has just moved back to Hibikino after seven years away. Says ore (casual male 'I'); plain, friendly, a little awkward with girls. Lines ending in ) are his thoughts."
+ },
+ "hikari": {
+  "name": "Hikari Hinomoto",
+  "speakers": ["陽ノ下"],
+  "codes": ["2"],
+  "notes": "The player's childhood friend: they were next-door neighbours until he moved away in second grade, and meet again at Hibikino High. Sprint ace of the track team. Bright, sunny and active; loves summer, the sea and the sun, collects small glass ornaments, cycles; scared of the dark, earthquakes, thunder and horror films. Shy about romance, so she sometimes acts as if she doesn't care. Kotoko is her best friend; she has mixed feelings about Kasumi. Speech: casual and warm, often stretches words (～): an occasional '~' is fine. Calls the player by name ({you:12}) or 'you' (kimi)."
+ },
+ "kotoko": {
+  "name": "Kotoko Minazuki",
+  "speakers": ["水無月"],
+  "codes": ["3"],
+  "notes": "Hikari's best friend since junior high; tea ceremony club; reads with a cup of tea, writes haiku. Loves Japanese tea, Japanese sweets and wabi-sabi; dislikes spicy food, coffee, Western literature and pointless foreign loanwords (she says 'gift' not 'present', 'banquet' for a Christmas party). Proud, sharp-tongued, polite on the surface but cutting; quick to anger, even slaps; can't be honest about her feelings (tsundere), warms up slowly; watches over Hikari's feelings for the player. Speech: refined feminine (wa ne, wa yo, kashira): in English crisp, slightly formal and cutting, never slangy, no trendy words. Always calls the player 'you' (anata; anta when angry), never by name. Sensitive to cold."
+ },
+ "miyuki": {
+  "name": "Miyuki Kotobuki",
+  "speakers": ["寿"],
+  "codes": ["4"],
+  "notes": "Absurdly unlucky (gets run over by trucks as a running gag) but irrepressibly cheerful; secretly afraid she'll be unlucky all her life. Tennis club (bad at it). Idol concerts, shrine visits, karaoke; loves character goods, small animals and the mascot Gray-chan; hates bad luck and lotteries; has a cat, Mii-chan. Best friend: Miho. Speech: bubbly, childlike; she refers to herself in the third person as 'Miyuki' almost always: keep that in English ('Miyuki's okay!', 'Miyuki was so worried'). Calls the player by name ({you:14})."
+ },
+ "akane": {
+  "name": "Akane Ichimonji",
+  "speakers": ["一文字"],
+  "codes": ["5"],
+  "notes": "Supports herself with part-time jobs and housework because her parents are away for years (her father, a martial artist, is on a training journey, and her mother went with him); thrifty to the point of stinginess. Likes baking, karaoke, window-shopping; likes school, hates studying. Usually easy-going and friendly, terrifying when angry. Her older brother Kaoru is the gang's supreme boss (総番長), and his delinquents call her 'Big Sis' (姉さん). Childhood best friend of Homura. Nickname Akachin (茜ちん). Speech: a 'boku girl': she calls herself boku (a boyish 'I'); in English give her a breezy, tomboyish but warm voice. Calls the player 'you' (kimi) or by name ({you:15})."
+ },
+ "miho": {
+  "name": "Miho Shirayuki",
+  "speakers": ["白雪"],
+  "codes": ["6", "B"],
+  "notes": "Drama club scriptwriter; gentle, dreamy romantic who loves fairy tales; when upset she escapes into fantasy and talks to 'the fairies' (妖精さん); famous at school for fortune-telling, which can be eerily serious. Collects antique dolls and picture books; loves cute things (Kerokero Debeso-chan); dislikes noise and anything gaudy. Weak at maths and sport. Best friend: Miyuki. Nickname Mihopyon (みほぴょん). Speech: polite (desu/masu) with everyone, soft and dreamy: in English gentle, polite and a little whimsical, never slangy. Calls the player 'you' (anata) or by name ({you:16}). Her twin Maho sometimes pretends to be her under the same label: see Maho."
+ },
+ "maho": {
+  "name": "Maho Shirayuki",
+  "speakers": ["真帆"],
+  "codes": [],
+  "notes": "Miho's identical twin and her opposite: lively, trendy, a bit of a flirt; loves karaoke, brand goods and fashion, hates anything ordinary. Goes to Kirameki High, not Hibikino. For fun she sometimes impersonates Miho, and the script shows it only by small tells: she is blunter, uses the player's name in greetings where Miho wouldn't, says she's bored (ヒマ) on the phone where Miho talks of fortunes, laughs things off where Miho blames the fairies, prefers karaoke, arcades and pools to parks and museums. If a line under Miho's name (白雪) sounds unlike Miho, it may be Maho in disguise: translate what is written and keep those tells; don't smooth them into Miho's voice."
+ },
+ "homura": {
+  "name": "Homura Akai",
+  "speakers": ["赤井"],
+  "codes": ["7"],
+  "notes": "Student council president: the principal appointed her as a punishment for arriving late to the entrance ceremony, and she treats the school as her playground and skips the actual work. Rough, boyish, loud, impulsive, straightforward. Loves food, sleep, games, TV anime (Godriller) and heroes; hates studying, group activities and sitting still. Signature move: the Prez Kick (会長キック). Childhood friend of Akane; feuds with Mei (calls her 'shorty', Mei calls her 'mountain monkey'); calls the principal Kazumi-chan. Called Prez (会長). Speech: says atashi but talks like a tough boy (da ze, zo, da na): in English blunt, punchy and cocky. Calls the player 'you' (rough omae) or by name ({you:17})."
+ },
+ "kaori": {
+  "name": "Kaori Yae",
+  "speakers": ["八重"],
+  "codes": ["8"],
+  "notes": "A year older than her classmates: she had to start high school again after an incident: on her old volleyball team she took the blame for a theft of club money to protect a senior, and was shunned afterwards. Since then she keeps people at a distance and seldom smiles; underneath she is cheerful and athletic. Loves cats, nature and tropical fish; hates lies, hypocrisy, gossip and dogs. Friends with Kaedeko. Speech: quiet, short, plain sentences; she opens up and grows brighter as she comes to trust the player. Calls the player 'you' (anata) or by name ({you:18})."
+ },
+ "kaedeko": {
+  "name": "Kaedeko Sakura",
+  "speakers": ["佐倉"],
+  "codes": ["9"],
+  "notes": "Manager of the baseball club, called Manager (マネージャー); the most conventionally girlish of the heroines: gentle, kind, a little clumsy, hardworking and upbeat; shy about romance. Worries about her weight (hates scales); loves baseball and, surprisingly, reptiles; hates caterpillars; collects postcards, does crafts. In the autumn of the second year she transfers to Daimon High in Hokkaido and stays in touch by phone (a long-distance romance). Friends with Kaori. Speech: soft and sweet, often stretches words (～). Calls the player by name ({you:19}) or 'you'."
+ },
+ "mei": {
+  "name": "Mei Ijuin",
+  "speakers": ["伊集院"],
+  "codes": ["A"],
+  "notes": "Heiress of the Ijuin family, a year below the player, younger sister of Rei Ijuin (from the first game). Spoiled, selfish and haughty and knows it; treats the player like a servant; looks down on commoners but is secretly curious about their life; sheltered; good with machines (computer club). Feuds with Homura ('mountain monkey'). Her narcissistic attendant and bodyguard Sakunoshin Mihara is always nearby and calls her Lady Mei (メイ様). Speech: refers to herself in the third person as 'Mei': keep that ('Mei is pleased.', 'Mei has never seen such a thing!'); ends sentences with a lordly noda / nanoda: in English pompous and imperious ('Indeed.', 'You shall…', 'Be grateful!'), never casual. Calls the player kisama (a contemptuous 'you': render as 'you', with her disdain in the wording) and 'commoner' (庶民)."
+ },
+ "kasumi": {
+  "name": "Kasumi Asou",
+  "speakers": ["麻生"],
+  "codes": ["1"],
+  "notes": "About six years older; the player's and Hikari's childhood neighbour and the 'big sister' he admired. Now a new teacher at Hibikino High (Japanese, brass band advisor) and his homeroom teacher: at school she is Ms. Asou (麻生先生). Brilliant, athletic, plays the piano; bad at early mornings. Kind to everyone, a little teasing with the player, and doubts her own path as a teacher. Best friend: Maeka Kudanshita. Speech: mature, warm feminine (wa yo, wa ne). Calls the player 'you' (anata) or by name ({you:11})."
+ },
+ "maeka": {
+  "name": "Maeka Kudanshita",
+  "speakers": ["九段下"],
+  "codes": [],
+  "notes": "Kasumi's friend since junior high; lives for work and turns up all over town doing a different part-time job each time. Frank, breezy, energetic older woman, a little scatterbrained. Calls the player kimi or anta ('you')."
+ },
+ "sumire": {
+  "name": "Sumire Nozaki",
+  "speakers": ["野咲"],
+  "codes": ["C"],
+  "notes": "Star of a circus that tours Japan, run by her father; a year younger than the player; best friends with Daisy the monkey; tired of always travelling. Speech: polite (desu/masu)."
+ },
+ "sakaki": {
+  "name": "Takumi Sakaki",
+  "speakers": ["坂城"],
+  "codes": [],
+  "notes": "The player's best friend and rival; cute-looking and popular with girls; collects information on every girl at school; hates wasting time. Says ore, calls the player omae ('you'): casual, cheeky, knowing."
+ },
+ "hokari": {
+  "name": "Jun'ichiro Hokari (Jun)",
+  "speakers": ["穂刈"],
+  "codes": [],
+  "notes": "The player's other friend and rival; kendo club; pure-hearted, blushes in front of girls; grows plants. Says ore, calls the player omae: short, plain, manly sentences."
+ },
+ "principal": {
+  "name": "Principal Kazumi Bakuretsuzan",
+  "speakers": ["爆裂山"],
+  "codes": [],
+  "notes": "Hibikino High's 188 cm principal; loves education and children's smiles, hates anything crooked; old friend of Homura's grandfather. Old-man speech (washi, ja). Catchphrase: 'I am… Ba-ku-re-tsu-zan!!' (ワシは～爆～裂～山～！！)."
+ },
+ "mihara": {
+  "name": "Sakunoshin Mihara",
+  "speakers": ["三原"],
+  "codes": [],
+  "notes": "Mei's attendant and bodyguard; a deep narcissist devoted to 'Lady Mei'; excellent shot. Speaks very politely, like a butler."
+ },
+ "kaoru": {
+  "name": "Kaoru Ichimonji, the gang's supreme boss",
+  "speakers": ["総番長"],
+  "codes": [],
+  "notes": "Akane's older brother and boss of all the delinquent gangs (総番長: 'the Big Boss'); a high-school classmate of Kasumi. Rough, old-school delinquent speech: calls the player kisama / omae ('you')."
+ }
+}

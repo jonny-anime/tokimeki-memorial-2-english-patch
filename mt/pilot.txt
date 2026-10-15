@@ -1,0 +1,10 @@
+# Pilot scenes for comparing models (Disc 2 workbooks). One scene key per line.
+G407000-6ddcedd5   # first meeting with Kotoko, with Hikari (40 lines)
+G132000-06496ae2   # Hikari (55)
+G014000-b8e25986   # Homura (58)
+G307000-18b14433   # Mei (65)
+G325000-c1377c64   # Kaedeko, {you} and {nobreak} (54)
+G309000-110d2242   # Sakaki, many {char} names (33)
+G132000-ac993304   # Kaori (43)
+G_TELG-d506ce96    # phone call, Akane: packed, can't grow (5)
+G_TELG-fd679081    # phone call, Mei: packed (5)

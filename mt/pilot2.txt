@@ -1,0 +1,14 @@
+# Harder pilot: emotional, rough, comic and choice scenes, Mei and Miho at length.
+# Scenes from Disc 2 (work/tl_pb4) and Disc 5 (work/tl_d5), gathered in work/tl_pilot2.
+G000014-cae446c8   # graduation day with Sakaki, a confession at the end (D5, 76 lines)
+G315000-c0660e9e   # Kaedeko: reunion, "I'm glad I waited" (D5, 51)
+G200000-c013e429   # Akane and the gang boss: a fight, rough speech (D5, 72)
+G280000-5ac716e4   # Miho tells fortunes at the culture festival (D5, 51)
+G330000-51704d6b   # chocolate, teasing (D5, 41)
+G000010-be390fbd   # Mei's servant comes to fetch the player, comic (D5, 29)
+G325000-3acc17cd   # Miyuki and the fortune slips, with choices (D5, 73)
+G001000-d97ad325   # asking Hikari questions: a choice menu (D5, 38)
+G014000-f353a483   # Mei at length, her pompous speech (D2, 58)
+G137000-acb335b6   # Mei after a date (D2, 27)
+G132000-8e0a5f27   # Miho, dreamy and polite (D2, 48)
+G336000-73040bb6   # Hikari's birthday, present choice (D2, 73)
