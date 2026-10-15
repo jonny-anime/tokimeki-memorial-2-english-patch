@@ -47,7 +47,41 @@ Other releases (the first pressing, reprints) and other formats (`.chd`, `.pbp`,
 identified by a checksum of its original bytes, so on a different version
 the patcher reports what it couldn't patch instead of writing garbage.
 
-## How to patch the game
+## Quick install: xdelta patches
+
+The easiest way, with no Python and no terminal.
+
+1. **Download the patches** from the
+   [Releases](https://github.com/jonny-anime/tokimeki-memorial-2-english-patch/releases)
+   page: one `.xdelta` file per disc, plus `checksums.txt`.
+2. **Check your discs.** Each patch fits one exact disc image: the CRC32 of
+   your original `.bin` must match the "original" line for that disc in
+   `checksums.txt` (on Windows, 7-Zip shows it: right-click the file →
+   *7-Zip → CRC SHA → CRC-32*). If a disc doesn't match, use the Python
+   patcher below instead: it works by what's inside the disc, not by
+   checksum.
+3. **Apply each patch to its disc's `.bin`** with any xdelta tool:
+   - [Rom Patcher JS](https://www.marcrobledo.com/RomPatcher.js/), in the
+     browser (pick the `.bin`, then the `.xdelta`);
+   - [Delta Patcher](https://github.com/marco-calautti/DeltaPatcher) on
+     Windows, macOS or Linux;
+   - or xdelta3 on the command line:
+     `xdelta3 -d -s "original.bin" "patch.xdelta" "English.bin"`.
+4. **Keep the file name.** Put each patched `.bin` in a new folder under
+   **the same name as the original**, and copy the original `.cue` next to
+   it: the `.cue` then works as it is. To play with disc switching, make a
+   text file `Tokimeki Memorial 2.m3u` in that folder listing the five
+   `.cue` file names, one per line, and open it in your emulator.
+
+A patched disc should have the CRC32 of the "English" line in
+`checksums.txt`. If you apply a patch to the wrong image, xdelta tools
+stop with a checksum error rather than writing a broken disc.
+
+## How to patch the game with Python
+
+For translators, for testing changes to `translations/`, or if your discs
+don't match the checksums.
+
 
 1. **Install Python 3.10 or newer.**
    - Windows: from [python.org](https://www.python.org/downloads/); in the
@@ -260,6 +294,7 @@ Pictures with text (titles, buttons, stat names) are PNGs in
 | Path | What it is |
 |---|---|
 | `patch.py` | Patches every disc in a folder (calls `tools/build_patch.py` per disc) |
+| `tools/make_xdelta.py` | Makes the xdelta patches and `checksums.txt` for a release |
 | `translations/` | The translation (Japanese and English) |
 | `pictures/` | Translated pictures and their manifest |
 | `tools/` | Disc and text tools, the builder, the checker, machine translation (`mt.py`) |

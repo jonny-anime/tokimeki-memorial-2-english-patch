@@ -291,6 +291,24 @@ state.
 Commit your changes to `translations/` and send a pull request. Never
 commit `work/`, disc images or screenshots.
 
+## Making a release (xdelta patches)
+
+After a change to `translations/`, build the English discs and make the
+patches from them:
+
+```
+py patch.py "path/to/your/discs" -f
+py tools/make_xdelta.py "path/to/your/discs" "path/to/your/discs/Tokimeki Memorial 2 (Japan) (Rev 1) [English]"
+```
+
+`make_xdelta.py` writes `patches/`: one `.xdelta` per disc (1 to 5 MB) and
+`checksums.txt` (CRC32, MD5 and SHA-1 of each original and English image).
+It applies every patch to its original again and checks that the result is
+the English image byte for byte. The patches are standard VCDIFF with
+xdelta3's per-window checksum, so xdelta3, Delta Patcher and Rom Patcher JS
+apply them and refuse the wrong source image. Upload the contents of
+`patches/` to a GitHub release (`patches/` is git-ignored).
+
 ## Making the files from your discs
 
 `translations/` was made from the discs; if a tool change finds more text,
