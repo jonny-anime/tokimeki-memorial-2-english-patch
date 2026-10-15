@@ -1,4 +1,4 @@
-# Tokimeki Memorial 2: PS1 English patch (beta)
+# Tokimeki Memorial 2: PS1 English patch 
 
 <img src="translated_screenshots/Screenshot%202026-10-14%20215828.png" width="800" alt="Hikari in the classroom: &quot;Ehehe, I'm so glad we're in the same class!&quot;">
 
@@ -7,7 +7,7 @@ Patches the Japanese PlayStation version of *Tokimeki Memorial 2* (Konami,
 the patch adds a narrow English font, Latin name entry and translated menus
 and pictures, and rewrites every scene's text on the disc.
 
-**This is a beta.** The whole script is translated, but by machine: Gemini
+The whole script is translated, but by machine: Gemini
 4 Argon translated it, scene by scene, with notes on each character, and
 Claude Opus 5.5 rewrote the lines Argon couldn't make fit. Only part of
 it has been read in the game. Expect awkward lines, wrong speakers or
