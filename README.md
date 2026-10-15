@@ -284,3 +284,7 @@ How it works, in brief:
 - [gothamor/tokimeki-memorial-english-patch](https://github.com/gothamor/tokimeki-memorial-english-patch):
   the English patch for the first *Tokimeki Memorial* (PS1), whose layout,
   methods and tooling this project follows.
+
+## External Human Translation 
+For those who don't like AI assissted translations and are willing to wait, a separate team is working on a 100% human edited patch to Tokimeki Memorial 2. We're not affiliated with each others projects. So reach out to them for any questions regarding theirs. 
+[Link](https://bsky.app/profile/xct.bsky.social/post/3mxseyu3vis2r) 
