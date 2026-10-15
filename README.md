@@ -61,8 +61,6 @@ The easiest way, with no Python and no terminal.
    patcher below instead: it works by what's inside the disc, not by
    checksum.
 3. **Apply each patch to its disc's `.bin`** with any xdelta tool:
-   - [Rom Patcher JS](https://www.marcrobledo.com/RomPatcher.js/), in the
-     browser (pick the `.bin`, then the `.xdelta`);
    - [Delta Patcher](https://github.com/marco-calautti/DeltaPatcher) on
      Windows, macOS or Linux;
    - or xdelta3 on the command line:
