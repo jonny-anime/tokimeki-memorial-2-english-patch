@@ -16,6 +16,11 @@ welcome: see [Helping improve the translation](#helping-improve-the-translation)
 
 The tools were written with Claude Opus 5.5.
 
+## Gameplay footage
+
+A [YouTube playlist](https://www.youtube.com/playlist?list=PLSOJiaCuuZMw)
+shows the patched game being played, more footage to be added.
+
 ## Disclaimer
 
 This is an unofficial fan project, not affiliated with, endorsed by or
