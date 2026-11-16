@@ -128,10 +128,12 @@ inside 13 program modules on Disc 1 (`tools/endings.py`). They are in
 (the dialogue of each ending) and `G_ENDING_NARRATION` (every different
 piece of the epilogue once; most are shared between the endings).
 
-- **They can't grow.** All the English of one of these entries together may
+- **They can't grow.** All the English of an ending's dialogue together may
   not take more bytes than its Japanese (1 letter = 1 byte, a Japanese
-  character = 2). The checker and the builder say by how much it is over; an
-  ending that doesn't fit stays Japanese.
+  character = 2); the checker says by how much it is over. The narration has
+  some slack, because the builder stores repeated phrases once: sentences
+  worded alike cost less. `endings.py report` shows how full each ending is;
+  one that doesn't fit stays Japanese.
 - Dialogue lines hold 40 letters; narration lines are re-wrapped by the
   builder at 36.
 - Dialogue lines carry voice-timing marks: `{t0123}` (the text before it

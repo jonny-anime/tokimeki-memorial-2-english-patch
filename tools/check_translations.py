@@ -283,7 +283,9 @@ def main(argv):
         room = rooms(discs)
     for wb, _ in scenes_:                         # the ending modules can't grow (tools/endings.py)
         if wb["scene"].startswith("G_ENDING"):
-            room[wb["key"]] = ("packed", 0)
+            # the narration may run over: the builder stores repeated phrases
+            # once (endings.py report shows whether each ending fits)
+            room[wb["key"]] = ("limit", 1 << 20) if wb["scene"] == "G_ENDING_NARRATION" else ("packed", 0)
     if ui:
         check_ui(rep, ui)
     for ja, en in names.items():

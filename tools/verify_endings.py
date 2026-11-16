@@ -10,6 +10,9 @@
    from the rebuilt script as from the original.
 3. The same with text made longer, which makes the builder move pieces of
    narration out of the script behind new table functions (run as real code).
+4. With the English of translations/: the game's routine writes, from each
+   rebuilt module, exactly the text a plain reading of the English script
+   gives (this covers the phrases the builder stores once and calls).
 Needs: pip install unicorn
 """
 import os, random, re, struct, sys
@@ -128,6 +131,57 @@ def grown_equal(a, b):
     return ta[0] == tb[0].replace("ab", "") and ta[1] == tb[1]
 
 
+def simulate(seq, results, inserts):
+    """What the narration script says, read directly from the builder's
+    token list (before any phrase is moved out)."""
+    at = {o: i for i, (o, _) in enumerate(seq) if o is not None}
+    out, last, i = bytearray(), 0, 0
+    while True:
+        t = seq[i][1]
+        i += 1
+        if t[0] == "text":
+            out += t[1]
+        elif t[0] == "call":
+            if t[1] in inserts:
+                out += inserts[t[1]]; last = 1
+            else:
+                last = results.get(t[1], 0)
+        elif t[0] == "jz":
+            if last == 0:
+                i = at[t[1]]
+        elif t[0] == "jmp":
+            i = at[t[1]]
+        elif t[0] == "end":
+            return bytes(out) + b"\n" * 10
+
+
+def real_english(mods, rng):
+    import translations
+    tl, names, ui = translations.load([translations.DEFAULT], with_ui=True)
+    narr = tl.get(E.narration_workbook(mods, "1")["key"], {})
+    runs = done = moved = 0
+    for mod in mods:
+        rep = []
+        new = mod.rebuild(tl.get(mod.key, {}), narr, ui, rep)
+        if new == mod.m:
+            continue
+        E.verify(mod, new)
+        done += 1
+        moved += mod.last["spilled"]
+        seq = mod.last["plain_seq"]
+        cc = {t[1] for i, (_, t) in enumerate(mod.tokens) if t[0] == "call" and mod.tokens[i + 1][1][0] == "jz"}
+        ci = {t[1] for i, (_, t) in enumerate(mod.tokens) if t[0] == "call" and mod.tokens[i + 1][1][0] != "jz"}
+        for trial in range(60):
+            p = rng.choice([0.1, 0.5, 0.9])
+            res = {k: int(rng.random() < p) for k in cc}
+            ins = {k: E.encode("Name%d" % k) for k in ci}
+            got, _ = run_interp(new, res, ins)
+            assert got == simulate(seq, res, ins), "%s trial %d: narration differs" % (mod.key, trial)
+            runs += 1
+    print("4. the English of translations/: %d modules rebuilt (%d phrases stored once), %d interpreter runs "
+          "give the expected text" % (done, moved, runs))
+
+
 def main(path):
     data = open(path, "rb").read() if path.endswith(".ud") else __import__("extract_scripts").read_user_data(path)
     mods = E.find(data)
@@ -167,6 +221,7 @@ def main(path):
                 assert grown_equal(s.raw, new[p:new.index(b"\0", p)])
         print("   %s script %d bytes at %x, %d texts moved out, %d of %d bytes used" % (mod.key, mod.last["script"], mod.last["script_at"], mod.last["spilled"], mod.last["need"], mod.last["total"]))
     print("3. longer fake English (fits in %d modules): %d interpreter runs equal" % (fits, runs))
+    real_english(mods, rng)
 
 
 if __name__ == "__main__":

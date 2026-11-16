@@ -928,11 +928,14 @@ into the bytes the Japanese used:
 
 - every string reached only through pointer words can go anywhere in that
   space (pointers rewritten, identical strings stored once);
-- the script is re-encoded with its jumps recomputed; if it no longer fits
-  its own block, its longest pieces of text move out, each behind a new
-  function appended to a copy of the table (`lui v0 / jr ra / addiu v0`:
-  it returns the text's address and the interpreter copies it in). That is
-  safe because every `7A` directly follows its own `66`;
+- the script is re-encoded with its jumps recomputed; if the English is too
+  long, phrases that occur several times in a module's narration are stored
+  once (and, if the script still doesn't fit its own block, its longest
+  pieces of text move out), each behind a new function appended to a copy of
+  the table (`lui v0 / jr ra / addiu v0`: it returns the text's address and
+  the interpreter copies it in). That is safe because every `7A` directly
+  follows its own `66`. With the first machine translation (narration 2,950
+  bytes over the Japanese) 23 phrases were enough for all 13 modules;
 - nothing else changes, and a module with no English is byte-identical.
 
 **Checks** (`python tools/verify_endings.py <disc1.bin>`): with no English

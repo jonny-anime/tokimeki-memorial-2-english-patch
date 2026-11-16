@@ -268,6 +268,80 @@ def join_lines(lines, seps):
     return out
 
 
+def _cells(b):
+    out, p = [], 0
+    while p < len(b):
+        n = 2 if b[p] >= 0x80 else 1
+        out.append(b[p:p + n]); p += n
+    return out
+
+
+def _best_phrase(texts, lo=5, hi=64):
+    """The run of cells (as bytes) whose storing once saves the most bytes
+    over all the texts, or None.  A use costs 2 bytes; the phrase costs its
+    length + 1 and 16 bytes of function and table entry."""
+    count = collections.Counter()
+    for t in texts:
+        c = _cells(t)
+        for n in range(lo, min(hi, len(c)) + 1):
+            for i in range(len(c) - n + 1):
+                count[b"".join(c[i:i + n])] += 1
+    best, gain = None, 8
+    for b, k in count.items():
+        if k < 2:
+            continue
+        k = sum(_count_at_cells(t, b) for t in texts)          # non-overlapping uses
+        g = k * (len(b) - 2) - (len(b) + 17)
+        if g > gain:
+            best, gain = b, g
+    return best
+
+
+def _find_at_cell(t, b, start=0):
+    """First position >= start where b occurs in t on a cell boundary, or -1."""
+    p = start
+    while True:
+        p = t.find(b, p)
+        if p < 0:
+            return -1
+        q = 0
+        while q < p:
+            q += 2 if t[q] >= 0x80 else 1
+        if q == p:
+            return p
+        p += 1
+
+
+def _count_at_cells(t, b):
+    n, p = 0, _find_at_cell(t, b)
+    while p >= 0:
+        n += 1
+        p = _find_at_cell(t, b, p + len(b))
+    return n
+
+
+def _replace_phrase(seq, b, n):
+    """Every use of phrase b in the text tokens of seq becomes a call of
+    function n.  A token's old offset (what jumps refer to) stays on its
+    first piece."""
+    out = []
+    for o, t in seq:
+        if t[0] != "text" or _find_at_cell(t[1], b) < 0:
+            out.append((o, t)); continue
+        text, p = t[1], 0
+        while True:
+            q = _find_at_cell(text, b, p)
+            if q < 0:
+                break
+            if q > p:
+                out.append((o, ("text", text[p:q]))); o = None
+            out.append((o, ("call", n))); o = None
+            p = q + len(b)
+        if p < len(text):
+            out.append((o, ("text", text[p:])))
+    return out
+
+
 def is_japanese(s):
     return bool(s) and all("　" <= ch <= "ヿ" or "一" <= ch <= "鿿" or
                            "＀" <= ch <= "￯" or ch in "『』「」…？！" for ch in s)
@@ -508,27 +582,7 @@ class Module:
             return out
 
         script = assemble(seq)
-        # Too long for the script's own space: the longest pieces of text move
-        # out, each behind a new function of the table that returns its
-        # address (the interpreter copies a returned string into the text).
-        # Safe only because every 7A directly follows its own 66.
-        spill = []                                  # texts moved out, in table order
-        nfun = 1 + max(t[1] for _, t in toks if t[0] == "call")
-        room = self.funcs - self.script
-        if len(script) > room:
-            targets = {t[1] for _, t in toks if t[0] in ("jz", "jmp")}
-            plain = all(toks[k - 1][1][0] == "call" and o not in targets
-                        for k, (o, t) in enumerate(toks) if t[0] == "jz")
-            cand = sorted({t[1] for _, t in seq if t[0] == "text" and len(t[1]) >= SPILL_MIN},
-                          key=lambda b: -len(b)) if plain else []
-            for b in cand:
-                if len(script) <= room or nfun + len(spill) > 255:
-                    break
-                spill.append(b)
-                n = nfun + len(spill) - 1
-                seq = [(o, ("call", n)) if t == ("text", b) else (o, t) for o, t in seq]
-                script = assemble(seq)
-
+        plain_seq = list(seq)
         # the space: every movable string's slot and the script's
         strs = self.dialogue + self.names
         free = [[s.off, s.off + s.slot] for s in strs if s.movable]
@@ -544,6 +598,40 @@ class Module:
         out = bytearray(m)
         for a, b in merged:
             out[a:b] = bytes(b - a)
+
+        # Too much text: phrases that occur several times in the narration are
+        # stored once, each behind a new function of (a copy of) the table
+        # that returns its address; the interpreter copies a returned string
+        # into the text.  Then, if the script still doesn't fit its own block,
+        # its longest pieces of text move out the same way.  Safe only
+        # because every 7A directly follows its own 66.
+        spill = []                                  # texts stored outside the script, in table order
+        nfun = 1 + max(t[1] for _, t in toks if t[0] == "call")
+        room = self.funcs - self.script
+        fixed = sum(len(b) + 1 for b in {new_str.get(s, s.raw) for s in strs if s.movable})
+
+        def over():
+            extra = sum(len(b) + 1 for b in spill) + (4 * (nfun + len(spill)) + 12 * len(spill) + 3 if spill else 0)
+            return max(len(script) - room, len(script) + fixed + extra - total)
+
+        targets = {t[1] for _, t in toks if t[0] in ("jz", "jmp")}
+        plain = all(toks[k - 1][1][0] == "call" and o not in targets
+                    for k, (o, t) in enumerate(toks) if t[0] == "jz")
+        while plain and over() > 0 and nfun + len(spill) < 255:
+            b = _best_phrase([t[1] for _, t in seq if t[0] == "text"])
+            if b is None:
+                break
+            spill.append(b)
+            seq = _replace_phrase(seq, b, nfun + len(spill) - 1)
+            script = assemble(seq)
+        if plain and len(script) > room:
+            for b in sorted({t[1] for _, t in seq if t[0] == "text" and len(t[1]) >= SPILL_MIN},
+                            key=lambda b: -len(b)):
+                if len(script) <= room or nfun + len(spill) > 255:
+                    break
+                spill.append(b)
+                seq = _replace_phrase(seq, b, nfun + len(spill) - 1)
+                script = assemble(seq)
 
         def take(n, prefer=None, align=1):
             order = sorted(merged, key=lambda iv: (iv[0] != prefer, iv[1] - iv[0]))
@@ -612,7 +700,8 @@ class Module:
                     report.append("%s name at %x: %d bytes, %d fit (kept in Japanese)" % (self.key, s.off, len(b), s.slot - 1))
                     continue
                 out[s.off:s.off + s.slot] = b + bytes(s.slot - len(b))
-        self.last = {"need": need, "total": total, "script": len(script), "script_at": spos, "spilled": len(spill)}
+        self.last = {"need": need, "total": total, "script": len(script), "script_at": spos,
+                     "spilled": len(spill), "plain_seq": plain_seq}
         return bytes(out)
 
 
