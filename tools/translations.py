@@ -328,6 +328,10 @@ def pack(src, dst):
             rel = main_folder(wb)
             room = limits.get(key)
         loc = wb.get("location") or " / ".join(places.get(key, [])) or None
+        if key in old:          # same places as before: keep their order (it follows the
+            prev = old[key][0].get("location")      # menu file's order, which changes)
+            if prev and loc and sorted(prev.split(" / ")) == sorted(loc.split(" / ")):
+                loc = prev
         files[rel].append(workbook_to_scene(wb, names, loc, room))
         n += 1
     written = set()

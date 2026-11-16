@@ -56,6 +56,24 @@ CHILD_TEXT = [(0x800C021C, 0x800C0220)]
 # 0x801843A0. Only those lines.
 GRAD_MODULE = {"SLPM_863.55": (8967 * 2048, 0x801811E0, 7 * 2048)}
 GRAD_TEXT = [(0x80181430, 0x801815F8)]
+# The Extras ("OMAKE ROOM") screens and the minigames they start (Disc 1; each
+# is a module loaded at 0x800C0000 through the table at sector 541). Sizes of
+# the first four are not in the EXE's table: taken from where their code and
+# pointer tables end on the disc.
+EXTRA_MODULES = {"SLPM_863.55": [
+    ("OMAKE", 63825 * 2048, 0x800C0000, 28 * 2048),      # the Extras menu
+    ("ALBUM", 71655 * 2048, 0x800C0000, 32 * 2048),      # album data: messages, names
+    ("ENDLIST", 134899 * 2048, 0x800C0000, 56 * 2048),   # the list of endings
+    ("EVENTS", 73672 * 2048, 0x800C0000, 76 * 2048)]}    # event titles
+# Not taken yet: the minigame modules at sectors 60331, 60955 and 62927.
+# Their text is not reached through pointers the way this scanner expects.
+
+
+def _plain_japanese(t):
+    """Two or more characters, all kana, kanji or full-width: what the Extras
+    modules' labels look like. Keeps code and data that pass for a string out."""
+    return len(t) >= 2 and all("\u3000" <= c <= "\u30ff" or "\u4e00" <= c <= "\u9fff" or
+                               "\uff00" <= c <= "\uffef" or c in "\n…‥『』「」・！？" for c in t)
 EVS_MODULE = {"SLPM_863.55": (1505 * 2048, 0x800C0000, 96 * 2048 - 1)}
 EVS_TEXT = [(0x800C02E0, 0x800C03BC),       # button patterns, names
             (0x800C0488, 0x800C0B00),       # labels, memory card messages, girl names
@@ -109,6 +127,7 @@ def modules(data, path):
         mods.append(("CHILD",) + CHILD_MODULE[name])
     if name in GRAD_MODULE:
         mods.append(("GRAD",) + GRAD_MODULE[name])
+    mods += EXTRA_MODULES.get(name, [])
     return mods
 
 
@@ -173,6 +192,8 @@ def scan(data, path):
             cand = [c for c in cand if any(lo <= B + c[0] < hi for lo, hi in NAME_TEXT)]
         if name == "GRAD":
             cand = [c for c in cand if any(lo <= B + c[0] < hi for lo, hi in GRAD_TEXT)]
+        if any(name == m[0] for v in EXTRA_MODULES.values() for m in v):
+            cand = [c for c in cand if _plain_japanese(c[1])]
         take = {st for st, t, n, f in cand if refs.get(B + st)}
         starts = [st for st, t, n, f in cand]
         texts = {st: t for st, t, n, f in cand}
