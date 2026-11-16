@@ -955,7 +955,7 @@ subtitles: 18 NUL-terminated Shift-JIS lines at `0x80181430`-`0x801815F8`,
 shown from a table of (u16 start frame, u16 end frame, pointer) at
 `0x801843A0`; the screen is 512 wide. `tools/uitext.py` lists them as module
 `GRAD` (menus.json), replaced in place (15 to 35 bytes each). Seen on screen
-in Japanese (2026-11-16); English not yet tried there.
+in English (2026-11-16): letter pairs draw correctly on the subtitle bar.
 
 **Reaching the endings for testing** (seen on screen, 2026-11-16): a
 memory-card save can be moved in time. A game save is one block; the day
@@ -968,9 +968,23 @@ Sunday save moved to a Thursday. Writing the counter in RAM instead makes
 the game damage its own code (it adds a constant to 18 unaligned words of
 the EXE and the engine), so edit the save, not memory.
 
-**Not verified:** the 13 endings with a partner have not been seen on screen
-(that needs a save with a girl's affection raised): the dialogue marks'
-exact effect and whether a row of 20 cells is the real limit.
+**Choosing the partner** (read from the code; seen on screen for girl 2,
+Hikari, 2026-11-16). The graduation module (`0x8018196C`) calls engine
+`0x800D0B4C(0, 0)`: for girls 1-11 it takes the best score of
+`0x800D0FFC(girl)` that reaches 10000; that girl's number is the ending.
+A girl scores when her "met" value is 2 or more (u16 array at
+`*0x8006C6F0`), field `+2` of her record reaches her third threshold in the
+table at `0x8010FF20` and field `+6` her third threshold at `0x8010FF44`
+(3 bytes per girl, 75-100); the score is then cut for each of seven stats
+(humanities to guts) below her requirement (`0x800C0104`, 7 x s16 per girl,
+-1 = none, at most 200). The records are 11 x 0x30 bytes at `0x800A1B48`
+(save offset 0xA28), the nine 16.16 stats at `0x80074FE0` (save 0x1AC).
+With the day moved to 1053, Hikari's two fields set to 100 and the seven
+stats to 250, the game played her ending in English.
+
+**Not verified:** the other twelve endings with a partner have not been seen
+on screen (girls 1, 8, 9 and 11 have extra conditions; the girls not yet met
+in the test save need their "met" value, not yet located in the save).
 
 ## 12. Next steps
 0. UI text: check the romaji EVS nickname on screen (§14), the phone-book surnames (need repointing, §13.1), and the picture-only labels (§13).

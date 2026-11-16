@@ -16,10 +16,12 @@ Research notes and tools for the Tokimeki Memorial 2 translation toolkit.
   - `build_patch.py <original.bin> <out.bin> [--tl DIR]` – builds one patched English disc image (default `--tl translations`); `../patch.py <folder>` does every disc
   - `make_xdelta.py <original discs> <English discs>` – xdelta patches and checksums for a release
   - `mt.py`, `mt_compare.py`, `llm.py`, `limits.py` – machine translation through LLM APIs (see `translating.md`)
+  - `ui_mt.py export|import` – sends entries of the menu file through `mt.py` (one-line workbooks, each held to its own size)
   - `pictures.py find|export|import` – pictures with Japanese text; `make_pictures.py --disc1 … --disc2 … [--check]` remakes `pictures/*.png` from your discs with the edits in `tools/art/`
   - `datepatch.py`, `namepatch.py`, `evsname.py`, `evsgrid.py` – the main-screen date box, Latin name entry, romaji EVS nickname and reading grid
   - `check_translations.py [translations | FILE] [--disc …]` – checks translations without building (line counts, codes, widths, box rows, font, room)
   - `strpack.py` – repacks the name tables (`{char:NN}`, surname lists) so English names fit
+  - `endings.py report <disc1.bin>` – the 13 ending modules of Disc 1: finds them, makes their workbooks, repacks them with the English; `verify_endings.py <disc1.bin>` runs the game's own narration routine on the result in an emulator (needs `unicorn`)
   - `verify_glyphpatch.py <SLPM_863.5x>` – checks that code against the original in an emulator (needs `unicorn`, `capstone`)
 
 Extracted data, workbooks and experiments go under `work/` (git-ignored). `translations/` is the translation itself: Japanese and English, one entry per text box.

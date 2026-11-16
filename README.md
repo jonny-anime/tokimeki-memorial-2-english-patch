@@ -146,7 +146,8 @@ back when loaded: load it, switch to the English disc
 **On purpose**
 
 - The title logo, the copyright line and the staff roll.
-- Song lyrics and voice acting.
+- Voice acting and song lyrics, except the subtitles of the song in the
+  ending without a partner.
 - Lines that are only punctuation (a pause like `……`).
 
 **Not done**
@@ -163,6 +164,10 @@ back when loaded: load it, switch to the English disc
   cell), so spacing is even rather than proportional.
 - Some lines are a little too long for the box and wrap mid-word (the
   checker lists them).
+- The endings with a partner (the confession scenes and the epilogue, on
+  Disc 1) are translated but have not all been checked in the game yet.
+  Their text has to fit the space of the Japanese, so it is terser than the
+  rest. Reports with a screenshot are welcome.
 
 ## Helping improve the translation
 
@@ -189,7 +194,7 @@ disc:
 | `others/disc2.json` … | scenes no single girl leads (the player and his friends, teachers, narration) |
 | `childhood.json` | the childhood prologue (Disc 1) |
 | `phone_calls.json` | phone calls |
-| `endings.json` | graduation-day endings |
+| `endings.json` | graduation day: the scenes before the ending, the 13 endings with a partner (`G_ENDING01` … `G_ENDING13`) and their epilogue narration (`G_ENDING_NARRATION`) |
 | `misc.json` | dates, exams and other system scenes |
 | `menus.json` | menus, system text, names and place names |
 | `speaker_names.json` | the speaker labels (`"陽ノ下": "Hikari"`) |
@@ -316,6 +321,11 @@ How it works, in brief:
   becomes a cell with two narrow letters.
 - Menus and names are rewritten in place in the executable and its code
   modules; the name tables are repacked so English names fit.
+- The endings are text inside 13 program modules on Disc 1 that can't grow.
+  Their English is packed into the bytes the Japanese used, and phrases
+  the epilogue repeats are stored once (`tools/endings.py`; section 16 of
+  [docs/game-internals.md](docs/game-internals.md), which also says how to
+  move a memory-card save to graduation day to test them).
 
 ## Prior work
 
