@@ -15,6 +15,7 @@
                 parts move up, the size table is rewritten;
       pack    - same, plus the pack's offset table;
       packed  - must not grow (shorter text is zero-padded);
+  * rewrites the ending modules of Disc 1 with their English (tools/endings.py);
   * fixes EDC/ECC of every written sector.
 
 A scene that doesn't fit is left in Japanese and reported with the number of
@@ -34,6 +35,7 @@ import glyphpatch
 import namepatch
 import evsgrid
 import datepatch
+import endings
 import strpack
 import pictures
 import groups as GR
@@ -404,6 +406,11 @@ def main(argv):
             print("name tables rewritten: %s" % ", ".join(packed))
         for n in notes:
             print("note: name table", n)
+    n_end, end_notes = endings.apply(data, tl, ui, bld.pre)   # Disc 1: the endings' own text
+    if n_end:
+        print("ending modules rewritten: %d" % n_end)
+    for n in end_notes:
+        (bld.warnings if n.startswith("warning: ") else bld.errors).append(n.replace("warning: ", ""))
     bld.build(blocks, tl, names)
     written = []
     with open(dst, "r+b") as f:
@@ -452,6 +459,8 @@ def main(argv):
         for i, s, l in g.variants():
             if new_data[s * 2048:s * 2048 + 4] == b"\x38\x35\0\0":
                 script.messages(new_data, s * 2048)
+    if n_end:                                      # the endings read back from the patched disc
+        endings.check_disc(data, new_data, tl, ui)
     for ov, lba, size in bld.moved_overlays:      # moved overlays: every pack block parses
         buf = new_data[lba * 2048:lba * 2048 + size]
         for p in ov.packs:

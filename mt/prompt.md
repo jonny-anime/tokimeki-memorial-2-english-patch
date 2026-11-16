@@ -88,6 +88,8 @@ once each; place it where English grammar needs it. Never invent codes.
 | `{numX:YY}` | a number (a date, a count, a score) |
 | `{cXX}` | a control code: keep it in place |
 | `{nobreak}` | (only at the end of a line) the next line goes on the same row; keep it at the end |
+| `{t0123}` `{w0}` `{g0}` `{s0}` `{r}` | (ending scenes, `G_ENDINGnn`) voice-timing marks: the text before a `{tNNNN}` appears when the voice reaches that point. Keep every mark, in the same order, each one after the English words that match the Japanese before it |
+| `{ins:N}` | (ending narration, `G_ENDING_NARRATION`) a name or a word the game puts there |
 
 `N` in `{you:1N}` and `{char:2N}`:
 1 Kasumi Asou, 2 Hikari Hinomoto, 3 Kotoko Minazuki, 4 Miyuki Kotobuki,
