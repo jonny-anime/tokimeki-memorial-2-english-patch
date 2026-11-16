@@ -872,6 +872,83 @@ alignment padding). lz2 pictures are compressed with `lz2enc` (same idea;
 the main-screen texture goes from 2,353 to 1,843 bytes). Packet and
 record headers are left unchanged.
 
+## 16. The endings (`tools/endings.py`; verified in an emulator, not yet on screen)
+
+The endings are on **Disc 1 only** (no `G_END` block and no ending module on
+Discs 2-5; the build tool's own numbering calls the retail Disc 1 "DISC 5").
+Two kinds of text:
+
+- **Graduation-day scenes**: `G_END` blocks (group header at sector 8974,
+  17 variants) and `G_SOTSU`. Ordinary scene scripts (§10.1).
+- **The endings proper**: 13 code modules, one per ending, loaded at
+  `0x800C0000` through the resource table at sector 541 (entries
+  `0x370`-`0x3D0`: read word, sector 108959, 108989, ... 109349; the top 9
+  bits of the read word are not a size or a checksum). Their sizes are in the
+  EXE at `0x800620F8` (13 x u32, 0xD800-0x12000). They hold their own text,
+  plain Shift-JIS, outside the scene scripts. Addresses below: the first
+  module.
+
+**Dialogue** (the confession scene, voiced): NUL-terminated strings in the
+module's read-only data, each reached through **one pointer word** of a table
+near the end of the module (two for a few strings). `n01` + text with
+`0x0A` line breaks and ASCII marks, read by the routine at `0x800C9058`:
+
+| mark | meaning |
+|---|---|
+| `nNN` (start) | speaker: name = entry NN of the pointer table at `0x800CE028` |
+| `tNNNN` | wait until the routine's frame counter reaches NNNN (text follows the voice) |
+| `wN` | sets flag N |
+| `gN`, `sN` | one digit each (call `0x800C8548`; wait for a sound state) |
+| `r` | resets the frame counter |
+| other bytes < 0x80 | skipped |
+
+**Names**: short strings reached through pointer words (speaker labels, the
+words put into the narration); one honorific per module is also loaded with
+lui/addiu and stays where it is.
+
+**Narration** (the epilogue): one bytecode script per module, at the end of
+its data, followed by a table of function pointers. `0x800C2A84` runs it once
+into a buffer: a byte >= 0x80 copies two bytes, `0x0A` is copied, `66 nn`
+calls function nn (a result that is a pointer is a string to insert, anything
+else is a condition), `7A s16` jumps (relative to the byte after `7A`) if
+the last result was 0, `67 s16` always jumps, `00` ends, **any other byte is
+skipped**. The functions read the game state (stats, clubs, who the ending is
+with), so most of a script is one sentence per case. 252 different pieces of
+text in all, most shared between the modules.
+
+**Drawing.** Both go through `0x8001D94C` (§9), 16 x 16 glyphs uploaded per
+cell; the module sets the screen width to 512 (`0x80017E04(0x200)`), so the
+letter-pair renderer A is used. Rows are laid out per cell: dialogue 3 rows,
+narration 10; the longest Japanese lines are 20 and 18 cells.
+
+**Room.** A module's variables start right after its file in memory (the
+"trailing zeros" of the last sector are already variables, and static buffers
+follow up to `0x801CD000`), so a module **cannot grow**. The English is packed
+into the bytes the Japanese used:
+
+- every string reached only through pointer words can go anywhere in that
+  space (pointers rewritten, identical strings stored once);
+- the script is re-encoded with its jumps recomputed; if it no longer fits
+  its own block, its longest pieces of text move out, each behind a new
+  function appended to a copy of the table (`lui v0 / jr ra / addiu v0`:
+  it returns the text's address and the interpreter copies it in). That is
+  safe because every `7A` directly follows its own `66`;
+- nothing else changes, and a module with no English is byte-identical.
+
+**Checks** (`python tools/verify_endings.py <disc1.bin>`): with no English
+all 13 modules are identical; with the Japanese itself put through the
+English encoder and every name replaced, each dialogue string is reached
+through its pointers and the game's own narration routine, run in Unicorn
+with random results from the state functions (780 runs), writes the same
+text from the rebuilt script; the same with longer text, which exercises the
+moved-out pieces as real code (390 runs). The builder also re-reads the
+modules from the patched disc and checks that only the text space, its
+pointers and the two addresses changed.
+
+**Not verified:** nothing here has been seen on screen (no save near the
+end). In particular the dialogue marks' exact effect, whether a row of 20
+cells is the real limit, and that the game asks for Disc 1 at graduation.
+
 ## 12. Next steps
 0. UI text: check the romaji EVS nickname on screen (§14), the phone-book surnames (need repointing, §13.1), and the picture-only labels (§13).
 1. Japanese words inserted by codes (`{you:NN}` honorifics/pronouns, `{char:NN}`

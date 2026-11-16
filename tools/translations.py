@@ -429,6 +429,7 @@ def disc_number(path):
 
 
 def init(out, discs, src_dirs):
+    import endings
     import extract_scripts as X
     import scenes
     import uitext
@@ -445,6 +446,18 @@ def init(out, discs, src_dirs):
             w = "%s:%s" % (d, u.where)
             if w not in e["where"]:
                 e["where"].append(w)
+        end_mods = endings.find(data)                 # Disc 1: the endings' own text
+        for wb in endings.workbooks(data, d):
+            books.setdefault(wb["key"], wb)
+        for mod in end_mods:
+            for s in mod.names:
+                ja = s.raw.decode("cp932")
+                e = ui.setdefault(endings.ui_id(ja), {"ja": ja, "en": "", "max_bytes": 24, "where": []})
+                if not s.movable:                     # stays where it is: must fit
+                    e["max_bytes"] = min(e["max_bytes"], s.slot - 1)
+                w = "%s:%s@%08x" % (d, mod.scene, endings.RAM + s.off)
+                if w not in e["where"]:
+                    e["where"].append(w)
         for b in blocks:
             if not b.messages:
                 continue

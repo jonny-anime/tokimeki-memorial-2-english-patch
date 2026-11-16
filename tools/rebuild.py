@@ -35,6 +35,8 @@ def _code(tok):
     m = re.fullmatch(r"c([0-9A-F]{2})", name)
     if m:
         return bytes((int(m.group(1), 16),))
+    if re.fullmatch(r"t\d{4}|[wgs]\d|r|ins:\d+", name):
+        return b""          # marks of the ending modules (tools/endings.py encodes those itself)
     raise ValueError("unknown code " + tok)
 
 

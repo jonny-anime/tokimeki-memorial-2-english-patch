@@ -1,0 +1,16 @@
+# The ending modules of Disc 1 (tools/endings.py): the confession scenes and the epilogue narration.
+# Packed: the English may not take more bytes than the Japanese.
+G_ENDING01-d11e6906
+G_ENDING02-fb5e3d89
+G_ENDING03-3c19ce8a
+G_ENDING04-512d2d4a
+G_ENDING05-146c5dc8
+G_ENDING06-042ce085
+G_ENDING07-dbe76feb
+G_ENDING08-c051db9c
+G_ENDING09-1563e1c7
+G_ENDING10-ba683713
+G_ENDING11-e2da81aa
+G_ENDING12-f8003740
+G_ENDING13-fecd3f23
+G_ENDING_NARRATION-20dc8691

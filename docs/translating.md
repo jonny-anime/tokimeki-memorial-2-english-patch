@@ -120,6 +120,31 @@ the place labels of scenes), one entry per Japanese string:
   in this file. The phone book's surname list can't take English yet (its
   fields are 3–7 bytes).
 
+## The endings
+
+The confession scenes and the epilogue are not scene scripts: they are text
+inside 13 program modules on Disc 1 (`tools/endings.py`). They are in
+`translations/endings.json` like scenes, as `G_ENDING01` ... `G_ENDING13`
+(the dialogue of each ending) and `G_ENDING_NARRATION` (every different
+piece of the epilogue once; most are shared between the endings).
+
+- **They can't grow.** All the English of one of these entries together may
+  not take more bytes than its Japanese (1 letter = 1 byte, a Japanese
+  character = 2). The checker and the builder say by how much it is over; an
+  ending that doesn't fit stays Japanese.
+- Dialogue lines hold 40 letters; narration lines are re-wrapped by the
+  builder at 36.
+- Dialogue lines carry voice-timing marks: `{t0123}` (the text before it
+  appears when the voice reaches that point), `{w0}`, `{g0}`, `{s0}`, `{r}`.
+  Keep them all, in order, after the words they belong to.
+- `{ins:N}` in the narration is a name or a word the game inserts.
+- The names shown in these scenes are entries of `menus.json` (their
+  `where` says `1:G_ENDINGnn@...`); any length that fits the ending works.
+
+`py tools/endings.py report "path/to/Disc 1.bin"` shows how full each ending
+is, and `py tools/verify_endings.py "path/to/Disc 1.bin"` runs the checks
+described in `docs/game-internals.md`, section 16.
+
 ## Pictures
 
 Some labels are pictures (buttons, stat names, titles). Edited ones live in

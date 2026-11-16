@@ -202,7 +202,10 @@ def check_ui(rep, ui):
             rep.add("ERROR", where, "can't encode %r: %s" % (en, e))
             continue
         places = [re.fullmatch(r"[^:]+:(\w+)@([0-9a-fA-F]+)", w) for w in v.get("where", [])]
-        pooled = bool(places) and not v.get("scenes") and all(m and strpack.covers(m.group(1), int(m.group(2), 16)) for m in places)
+        # name tables the builder repacks (tools/strpack.py, tools/endings.py) take any length
+        pooled = bool(places) and not v.get("scenes") and all(
+            m and (m.group(1).startswith("G_ENDING") or strpack.covers(m.group(1), int(m.group(2), 16)))
+            for m in places)
         if len(b) > v["max_bytes"] and not pooled:
             rep.add("ERROR", where, "%r takes %d bytes, at most %d fit" % (en, len(b), v["max_bytes"]))
         bad = unsupported(en.replace("{none}", ""))
@@ -278,6 +281,9 @@ def main(argv):
         scenes_.sort(key=lambda t: (t[1] or "", t[0]["key"]))
     if discs:
         room = rooms(discs)
+    for wb, _ in scenes_:                         # the ending modules can't grow (tools/endings.py)
+        if wb["scene"].startswith("G_ENDING"):
+            room[wb["key"]] = ("packed", 0)
     if ui:
         check_ui(rep, ui)
     for ja, en in names.items():
