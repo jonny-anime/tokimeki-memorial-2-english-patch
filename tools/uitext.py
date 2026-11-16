@@ -50,6 +50,12 @@ NAME_TEXT = [(0x800C0188, 0x800C0248),      # name, birthday and blood-type prom
 # 0x800C0000): only its speech mark 「, the rest is digit tiles and data.
 CHILD_MODULE = {"SLPM_863.55": (35248 * 2048, 0x800C0000, 0x2BC00)}
 CHILD_TEXT = [(0x800C021C, 0x800C0220)]
+# The graduation-day event module (Disc 1, sectors 8967-8973, loaded at
+# 0x801811E0): the subtitles of the song in the ending without a partner,
+# 18 lines reached through a table of (start frame, end frame, pointer) at
+# 0x801843A0. Only those lines.
+GRAD_MODULE = {"SLPM_863.55": (8967 * 2048, 0x801811E0, 7 * 2048)}
+GRAD_TEXT = [(0x80181430, 0x801815F8)]
 EVS_MODULE = {"SLPM_863.55": (1505 * 2048, 0x800C0000, 96 * 2048 - 1)}
 EVS_TEXT = [(0x800C02E0, 0x800C03BC),       # button patterns, names
             (0x800C0488, 0x800C0B00),       # labels, memory card messages, girl names
@@ -101,6 +107,8 @@ def modules(data, path):
         mods.append(("EVS",) + EVS_MODULE[name])
     if name in CHILD_MODULE:
         mods.append(("CHILD",) + CHILD_MODULE[name])
+    if name in GRAD_MODULE:
+        mods.append(("GRAD",) + GRAD_MODULE[name])
     return mods
 
 
@@ -163,6 +171,8 @@ def scan(data, path):
             cand = [c for c in cand if any(lo <= B + c[0] < hi for lo, hi in CHILD_TEXT)]
         if name == "NAME":
             cand = [c for c in cand if any(lo <= B + c[0] < hi for lo, hi in NAME_TEXT)]
+        if name == "GRAD":
+            cand = [c for c in cand if any(lo <= B + c[0] < hi for lo, hi in GRAD_TEXT)]
         take = {st for st, t, n, f in cand if refs.get(B + st)}
         starts = [st for st, t, n, f in cand]
         texts = {st: t for st, t, n, f in cand}
