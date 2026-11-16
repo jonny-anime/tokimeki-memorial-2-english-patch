@@ -296,6 +296,23 @@ existing English too, including corrections people made: use it only on
 scenes nobody has edited); `pack` writes them back into `translations/`
 (each scene stays in its file). Then check and build as usual.
 
+### Menu entries through the same models
+
+`tools/mt.py` only reads scene workbooks. To send entries of the menu file
+(`_ui.json`) to a model, turn them into one-line workbooks first and copy
+the result back:
+
+```
+py tools/ui_mt.py export work/tl work/ui_mt --where GRAD
+py tools/mt.py run work/ui_mt --run NAME --models argon --all
+py tools/ui_mt.py import work/mt/NAME/argon work/tl
+```
+
+`--where` is any text of an entry's `where` (a module name such as `GRAD` or
+`OV5`); only entries with no English are taken unless you add `--all`. Each
+entry is a "packed" scene of its own, so the model is held to that entry's
+size. Use a fresh output folder per selection.
+
 ## Build and test
 
 ```

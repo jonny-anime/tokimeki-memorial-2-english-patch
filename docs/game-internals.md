@@ -948,9 +948,29 @@ moved-out pieces as real code (390 runs). The builder also re-reads the
 modules from the patched disc and checks that only the text space, its
 pointers and the two addresses changed.
 
-**Not verified:** nothing here has been seen on screen (no save near the
-end). In particular the dialogue marks' exact effect, whether a row of 20
-cells is the real limit, and that the game asks for Disc 1 at graduation.
+**The ending without a partner** is not one of the 13 modules: it is in the
+graduation-day event module (Disc 1 sectors 8967-8973, loaded at
+`0x801811E0`, which also holds the `G_SOTSU` block). A song plays with
+subtitles: 18 NUL-terminated Shift-JIS lines at `0x80181430`-`0x801815F8`,
+shown from a table of (u16 start frame, u16 end frame, pointer) at
+`0x801843A0`; the screen is 512 wide. `tools/uitext.py` lists them as module
+`GRAD` (menus.json), replaced in place (15 to 35 bytes each). Seen on screen
+in Japanese (2026-11-16); English not yet tried there.
+
+**Reaching the endings for testing** (seen on screen, 2026-11-16): a
+memory-card save can be moved in time. A game save is one block; the day
+counter (days since 1 April 1999, RAM `0x80075800`) is the u16 at offset
+0x1A8 and the checksum at 0x15FF is the XOR of bytes 0x180-0x159B
+(`0x8001A294`). A save made on a Sunday, moved by whole weeks to 17 February
+2002 and loaded on Disc 5, played on to graduation; the game then asked for
+Disc 1. A save made on a Monday moved by two weeks froze, and so did a
+Sunday save moved to a Thursday. Writing the counter in RAM instead makes
+the game damage its own code (it adds a constant to 18 unaligned words of
+the EXE and the engine), so edit the save, not memory.
+
+**Not verified:** the 13 endings with a partner have not been seen on screen
+(that needs a save with a girl's affection raised): the dialogue marks'
+exact effect and whether a row of 20 cells is the real limit.
 
 ## 12. Next steps
 0. UI text: check the romaji EVS nickname on screen (§14), the phone-book surnames (need repointing, §13.1), and the picture-only labels (§13).
