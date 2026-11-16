@@ -141,6 +141,10 @@ saves from the Japanese game should carry over. A save *state* made with a Japan
 back when loaded: load it, switch to the English disc
 (*System → Change Disc*), and make a new state.
 
+**Subtitles in the endings:** in an ending with a partner, the girl's own
+lines are voice only by default, as in the Japanese game. Press **Cross (×)**
+while she is speaking to show them as text; press it again to hide them.
+
 ## What's still in Japanese
 
 **On purpose**

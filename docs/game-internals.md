@@ -982,6 +982,15 @@ table at `0x8010FF20` and field `+6` her third threshold at `0x8010FF44`
 With the day moved to 1053, Hikari's two fields set to 100 and the seven
 stats to 250, the game played her ending in English.
 
+**Hidden lines** (seen on screen, 2026-11-16). A girl's lines (`n01`-`n13`)
+are typeset like any other, but their cells get flag bit 1 and the draw
+routine (`0x800C9728` in the second module) skips such cells while the word
+at `+0x0A` of the dialogue state is 0, which it is at the start: her lines
+are voice only, in the Japanese game too. The module's main loop
+(`0x800C5918`) toggles that word when Cross is pressed (pad word
+`0x80075114`, mask `0x00400040`), and the text then shows, in English in the
+patched game. The player's lines (`n00`) are always drawn.
+
 **Not verified:** the other twelve endings with a partner have not been seen
 on screen (girls 1, 8, 9 and 11 have extra conditions; the girls not yet met
 in the test save need their "met" value, not yet located in the save).
