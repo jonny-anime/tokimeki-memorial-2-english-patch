@@ -328,6 +328,10 @@ def pack(src, dst):
             rel = main_folder(wb)
             room = limits.get(key)
         loc = wb.get("location") or " / ".join(places.get(key, [])) or None
+        if key in old:          # same places as before: keep their order (it follows the
+            prev = old[key][0].get("location")      # menu file's order, which changes)
+            if prev and loc and sorted(prev.split(" / ")) == sorted(loc.split(" / ")):
+                loc = prev
         files[rel].append(workbook_to_scene(wb, names, loc, room))
         n += 1
     written = set()
@@ -431,6 +435,7 @@ def disc_number(path):
 def init(out, discs, src_dirs):
     import endings
     import extract_scripts as X
+    import minigames
     import scenes
     import uitext
     os.makedirs(out, exist_ok=True)
@@ -447,8 +452,14 @@ def init(out, discs, src_dirs):
             if w not in e["where"]:
                 e["where"].append(w)
         end_mods = endings.find(data)                 # Disc 1: the endings' own text
-        for wb in endings.workbooks(data, d):
-            books.setdefault(wb["key"], wb)
+        for wb in endings.workbooks(data, d) + minigames.workbooks(data, d):
+            if wb["key"] in books:                    # the same text on another disc
+                books[wb["key"]]["found"].update(wb["found"])
+            else:
+                books[wb["key"]] = wb
+                for m in wb["messages"]:
+                    if m["speaker"] and m["speaker"]["at"] is not None and "{" not in m["speaker"]["ja"]:
+                        labels[m["speaker"]["ja"]] = labels.get(m["speaker"]["ja"], 0) + 1
         for mod in end_mods:
             for s in mod.names:
                 ja = s.raw.decode("cp932")

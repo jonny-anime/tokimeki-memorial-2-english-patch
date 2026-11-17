@@ -11,6 +11,7 @@ number code 2, other codes 1; the same unit as the checker's "grows by"):
   bundle / pack part            the free bytes left in the bundle's sectors
                                 (shared with the other parts)
   packed                        0
+  minigame script               the one or two bytes before the module's data
 
 A scene found on several discs gets the smallest value. tools/mt.py reads
 the file (--limits) and makes the model shorten scenes that go over.
@@ -22,6 +23,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import extract_scripts as X  # noqa: E402
 import groups as GR  # noqa: E402
+import minigames  # noqa: E402
 import scenes  # noqa: E402
 
 MARGIN = 4          # pad4 of rebuilt parts
@@ -41,6 +43,8 @@ def limits(data):
             room = 0
         room = max(0, room - MARGIN)
         out[b.key] = min(room, out.get(b.key, room))
+    for b in minigames.find(data):                # scripts inside modules: no room at all
+        out[b.key] = b.room - b.end
     return out
 
 

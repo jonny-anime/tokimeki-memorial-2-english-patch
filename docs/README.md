@@ -22,6 +22,7 @@ Research notes and tools for the Tokimeki Memorial 2 translation toolkit.
   - `check_translations.py [translations | FILE] [--disc …]` – checks translations without building (line counts, codes, widths, box rows, font, room)
   - `strpack.py` – repacks the name tables (`{char:NN}`, surname lists) so English names fit
   - `endings.py report <disc1.bin>` – the 13 ending modules of Disc 1: finds them, makes their workbooks, repacks them with the English; `verify_endings.py <disc1.bin>` runs the game's own narration routine on the result in an emulator (needs `unicorn`)
+  - `minigames.py report <disc.bin>` – the two small scripts inside the festival minigame modules (Discs 1, 2 and 4): finds them, makes their workbooks, puts the English back in place
   - `verify_glyphpatch.py <SLPM_863.5x>` – checks that code against the original in an emulator (needs `unicorn`, `capstone`)
 
 Extracted data, workbooks and experiments go under `work/` (git-ignored). `translations/` is the translation itself: Japanese and English, one entry per text box.
