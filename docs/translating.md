@@ -147,6 +147,17 @@ piece of the epilogue once; most are shared between the endings).
 is, and `py tools/verify_endings.py "path/to/Disc 1.bin"` runs the checks
 described in `docs/game-internals.md`, section 16.
 
+## The festival minigames
+
+Two minigame modules (Discs 1, 2 and 4) carry a small script of their own:
+the stall owner's explanations (`tools/minigames.py`). They are in
+`translations/misc.json` as `G_MINIGAME1` and `G_MINIGAME2`, and
+`mt/minigames.txt` lists their keys. Like the endings **they can't grow**:
+all the English of one script together may not take more bytes than its
+Japanese (about 28 letters a line on average; the checker says by how much
+it is over), and a script that doesn't fit stays Japanese.
+`py tools/minigames.py report "path/to/Disc 1.bin"` shows how full each is.
+
 ## Pictures
 
 Some labels are pictures (buttons, stat names, titles). Edited ones live in

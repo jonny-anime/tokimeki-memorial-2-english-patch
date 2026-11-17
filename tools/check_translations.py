@@ -215,11 +215,15 @@ def check_ui(rep, ui):
 
 def rooms(discs):
     import extract_scripts as X
+    import minigames
     import scenes
     out = {}
     for d in discs:
-        for b in scenes.scan(X.read_user_data(d)):
+        data = X.read_user_data(d)
+        for b in scenes.scan(data):
             out.setdefault(b.key, (b.kind, b.room))
+        for b in minigames.find(data):
+            out.setdefault(b.key, ("packed", b.room - b.end))
     return out
 
 
@@ -286,6 +290,8 @@ def main(argv):
             # the narration may run over: the builder stores repeated phrases
             # once (endings.py report shows whether each ending fits)
             room[wb["key"]] = ("limit", 1 << 20) if wb["scene"] == "G_ENDING_NARRATION" else ("packed", 0)
+        elif wb["scene"].startswith("G_MINIGAME"):   # scripts inside modules (tools/minigames.py)
+            room.setdefault(wb["key"], ("packed", 0))
     if ui:
         check_ui(rep, ui)
     for ja, en in names.items():

@@ -67,6 +67,8 @@ EXTRA_MODULES = {"SLPM_863.55": [
     ("EVENTS", 73672 * 2048, 0x800C0000, 76 * 2048)]}    # event titles
 # Not taken yet: the minigame modules at sectors 60331, 60955 and 62927.
 # Their text is not reached through pointers the way this scanner expects.
+# (The small scripts inside the modules at 60955 and 62106 are handled by
+# tools/minigames.py.)
 
 
 def _plain_japanese(t):

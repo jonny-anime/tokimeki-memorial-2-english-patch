@@ -16,6 +16,7 @@
       pack    - same, plus the pack's offset table;
       packed  - must not grow (shorter text is zero-padded);
   * rewrites the ending modules of Disc 1 with their English (tools/endings.py);
+  * rewrites the scripts inside the festival minigame modules (tools/minigames.py);
   * fixes EDC/ECC of every written sector.
 
 A scene that doesn't fit is left in Japanese and reported with the number of
@@ -36,6 +37,7 @@ import namepatch
 import evsgrid
 import datepatch
 import endings
+import minigames
 import strpack
 import pictures
 import groups as GR
@@ -411,6 +413,10 @@ def main(argv):
         print("ending modules rewritten: %d" % n_end)
     for n in end_notes:
         (bld.warnings if n.startswith("warning: ") else bld.errors).append(n.replace("warning: ", ""))
+    n_mini, mini_notes = minigames.apply(data, tl, names, bld.pre)   # scripts inside the minigame modules
+    if n_mini:
+        print("minigame scripts rewritten: %d" % n_mini)
+    bld.errors += mini_notes
     bld.build(blocks, tl, names)
     written = []
     with open(dst, "r+b") as f:
@@ -461,6 +467,8 @@ def main(argv):
                 script.messages(new_data, s * 2048)
     if n_end:                                      # the endings read back from the patched disc
         endings.check_disc(data, new_data, tl, ui)
+    if n_mini:
+        minigames.check_disc(data, new_data, tl, names)
     for ov, lba, size in bld.moved_overlays:      # moved overlays: every pack block parses
         buf = new_data[lba * 2048:lba * 2048 + size]
         for p in ov.packs:

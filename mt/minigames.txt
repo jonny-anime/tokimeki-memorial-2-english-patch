@@ -1,0 +1,4 @@
+# The scripts inside the festival minigame modules (tools/minigames.py), Discs 1, 2 and 4.
+# Packed: the English may not take more bytes than the Japanese.
+G_MINIGAME1-4124d2b5
+G_MINIGAME2-67a17e4c

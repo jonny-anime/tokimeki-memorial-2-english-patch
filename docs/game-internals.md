@@ -995,6 +995,54 @@ patched game. The player's lines (`n00`) are always drawn.
 on screen (girls 1, 8, 9 and 11 have extra conditions; the girls not yet met
 in the test save need their "met" value, not yet located in the save).
 
+## 17. Scripts inside the minigame modules (`tools/minigames.py`; not yet on screen)
+
+**Text the scene scan misses.** A scan of the discs for script lines
+(`00 10` + nibble-swapped Shift-JIS) finds about 1,030 lines outside the
+blocks the extractor reaches. Byte comparison shows what they are:
+
+- About 760 are **stale copies**: the unused tail of a sector that belongs
+  to another file (after a `.sx` picture name table, after the end of
+  compressed picture data, after a short scene variant) still holds what the
+  mastering buffer held before. Each is identical, with its surroundings, to
+  a line the extractor reaches, at the same offset in its sector. The game
+  never reads them. Discs 3 and 5 hold nothing else.
+- Most of the rest are chance matches in compressed data.
+- **Real:** two festival minigame modules (Discs 1, 2 and 4) each hold a
+  script of their own, 46 and 24 lines (the stall owner).
+
+| | Disc 1 | Disc 2 | Disc 4 |
+|---|---|---|---|
+| module (resource table entry 107), 42 sectors | 60955 | 291616 | 293283 |
+| its script | sector 60994 + 0x568 | 291655 + 0x598 | 293322 + 0x598 |
+| module (entry 103), 58 sectors | 62106 | 292767 | 294434 |
+| its script | sector 62161 + 0x168 | 292822 + 0x168 | 294489 + 0x168 |
+
+The scripts are byte-identical on the three discs (the modules are not).
+
+**Format.** Header `37 35 00 00`, u16 offset of the first instruction
+(0x20) at +4, `"DEFAULT"` at +0x18; then the instructions of section 5
+(same opcodes: all of them parse, and every 30/31 jump lands on an
+instruction), ending with `FF` and `FF` padding to a multiple of 4. Each
+module loads its script's address with one `lui`/`addiu` (Disc 1:
+0x800C5DC0 -> 0x800D3D68; 0x800C6A9C -> 0x800DB968) and its own data
+follows at the next word, so the script has 1652 and 800 bytes and no more.
+The zero bytes at the end of the module files are variables (the code reads
+and writes them), not free space.
+
+**Drawing.** The modules keep a grid of 2-byte cells and draw each cell
+through `0x8001D94C` into a 16 x 16 rectangle, as the dialogue window does.
+Whether the letter pairs show correctly there is **not yet seen on screen**.
+
+**Patching.** `tools/minigames.py` re-encodes the lines in place, recomputes
+the jumps and pads with `FF`; a script whose English is longer than its
+room stays Japanese. Scenes `G_MINIGAME1`/`G_MINIGAME2` (packed).
+
+Still open: a second section in scene `G336000` (Disc 2 sector 253519,
+offset 0x1D3, 8 lines, 4 of them not in the translation files) and one
+script line in the exam module (Disc 1 sector 2414 + 0x517); how either is
+entered is not established.
+
 ## 12. Next steps
 0. UI text: check the romaji EVS nickname on screen (§14), the phone-book surnames (need repointing, §13.1), and the picture-only labels (§13).
 1. Japanese words inserted by codes (`{you:NN}` honorifics/pronouns, `{char:NN}`
