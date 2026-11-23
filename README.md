@@ -7,11 +7,9 @@ Patches the Japanese PlayStation version of *Tokimeki Memorial 2* (Konami,
 the patch adds a narrow English font, Latin name entry and translated menus
 and pictures, and rewrites every scene's text on the disc.
 
-The whole script is translated, but by machine: Gemini
+The whole script is translated, and the game is playable from beginning to end. It's machine translated. Gemini
 4 Argon translated it, scene by scene, with notes on each character, and
-Claude Opus 5.5 rewrote the lines Argon couldn't make fit. Only part of
-it has been read in the game. Expect awkward lines, wrong speakers or
-genders now and then, and a few scenes that look off. Corrections are very
+Claude Opus 5.5 rewrote the lines Argon couldn't make fit.  Corrections are very
 welcome: see [Helping improve the translation](#helping-improve-the-translation).
 
 The tools were written with Claude Opus 5.5.
@@ -24,7 +22,7 @@ shows the patched game being played, more footage to be added.
 Screenshots of the translation in the game are in
 [translated_screenshots/](translated_screenshots/). The `tumblr_*` images
 are by [retrogamelove](https://www.tumblr.com/retrogamelove), who has been
-playing the patched game and posting screenshots on Tumblr. Thanks!
+playing the patched game and posting screenshots on Tumblr. He's completed 5 playthroughs and counting :).
 
 ## Disclaimer
 
