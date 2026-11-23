@@ -21,6 +21,11 @@ The tools were written with Claude Opus 5.5.
 A [YouTube playlist](https://www.youtube.com/playlist?list=PLSOJiaCuuZMw)
 shows the patched game being played, more footage to be added.
 
+Screenshots of the translation in the game are in
+[translated_screenshots/](translated_screenshots/). The `tumblr_*` images
+are by [retrogamelove](https://www.tumblr.com/retrogamelove), who has been
+playing the patched game and posting screenshots on Tumblr. Thanks!
+
 ## Disclaimer
 
 This is an unofficial fan project, not affiliated with, endorsed by or
@@ -340,3 +345,11 @@ How it works, in brief:
 ## External Human Translation 
 For those who don't like AI assissted translations and are willing to wait, a separate team is working on a 100% human edited patch to Tokimeki Memorial 2. We're not affiliated with each others projects. So reach out to them for any questions regarding theirs. 
 [Link](https://bsky.app/profile/xct.bsky.social/post/3mxseyu3vis2r) 
+
+## License
+
+The code and English translations in this repository are released into the
+public domain under the [Unlicense](LICENSE): anyone can use, copy, modify
+or distribute them for any purpose, without asking or giving credit. This
+doesn't cover Konami's material (see [Disclaimer](#disclaimer)), such as
+the original Japanese text in the translation files.
